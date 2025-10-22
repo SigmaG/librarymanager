@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>New Board Game</h2>
+  <form method="post">
+    <label>Title: <input name="title" value="{{ item.title if item else '' }}"/></label><br/>
+    <label>Author (designer): <input name="author" value="{{ item.author_note if item else '' }}"/></label><br/>
+  <label>Genres (comma separated): <input name="genres" value="{% if item %}{{ item.genres|map(attribute='name')|join(', ') }}{% else %}{% endif %}"/></label><br/>
+    <label>Min players: <input name="min_players" type="number" value="{{ item.min_players if item else '' }}"/></label><br/>
+    <label>Max players: <input name="max_players" type="number" value="{{ item.max_players if item else '' }}"/></label><br/>
+  <label>External URL: <input name="external_url" value="{{ item.external_url if item else '' }}"/></label><br/>
+  <label>Image URL: <input name="image_url" value="{{ item.image_url if item else '' }}"/></label><br/>
+    <button type="submit">{{ 'Save' if item else 'Create' }}</button>
+  </form>
+{% endblock %}

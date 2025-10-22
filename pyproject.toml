@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "librarymanager"
+version = "0.1.0"
+description = "Library Manager - minimal Flask + SQLite skeleton"
+requires-python = ">=3.12"
+dependencies = [
+  "Flask>=2.3",
+  "Flask-SQLAlchemy>=3.0",
+  "Flask-Migrate>=4.0",
+  "Flask-Login>=0.7",
+  "python-dotenv>=1.0",
+]

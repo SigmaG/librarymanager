@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block title %}{{ item.title }}{% endblock %}
+{% block content %}
+  <h2>{{ item.title }} ({{ item.type }})</h2>
+  <p>
+    <a href="/items/{{ item.id }}/edit">Edit</a>
+    <form action="/items/{{ item.id }}/delete" method="post" style="display:inline" onsubmit="return confirm('Delete this item?');">
+      <button type="submit">Delete</button>
+    </form>
+  </p>
+  <p>{{ item.description }}</p>
+  {% if item.image_url %}
+    <p><img src="{{ item.image_url }}" alt="{{ item.title }}" style="max-width:200px; max-height:200px;"/></p>
+  {% endif %}
+  {% if item.external_url %}
+    <p><a href="{{ item.external_url }}" target="_blank" rel="noopener">Open external link</a></p>
+  {% endif %}
+  <p>Authors: {% for a in item.authors %}{{ a.name }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+  <p>Genres: {% for g in item.genres %}{{ g.name }}{% if not loop.last %}, {% endif %}{% endfor %}</p>
+
+  {% if item.type == 'book' %}
+    <p>Language: {{ item.language }}</p>
+    <p>Publisher: {{ item.publisher }}</p>
+    <p>Pages: {{ item.length }}</p>
+    <p>Size: {{ item.size }}</p>
+  {% elif item.type == 'cd' %}
+    <p>Artist: {{ item.primary_artist }}</p>
+    <p>Tracks: {{ item.track_list }}</p>
+  {% elif item.type == 'dvd' %}
+    <p>Director: {{ item.director }}</p>
+    <p>Main actors: {{ item.main_actors }}</p>
+  {% elif item.type == 'board_game' %}
+    <p>Players: {{ item.min_players }} - {{ item.max_players }}</p>
+  {% endif %}
+{% endblock %}

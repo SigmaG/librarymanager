@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>New Book</h2>
+  <form method="post">
+    <label>Title: <input name="title" value="{{ item.title if item else '' }}"/></label><br/>
+    <label>Description: <textarea name="description">{{ item.description if item else '' }}</textarea></label><br/>
+  <label>Authors (comma separated): <input name="authors" value="{% if item %}{{ item.authors|map(attribute='name')|join(', ') }}{% else %}{% endif %}"/></label><br/>
+  <label>Genres (comma separated): <input name="genres" value="{% if item %}{{ item.genres|map(attribute='name')|join(', ') }}{% else %}{% endif %}"/></label><br/>
+    <label>Language: <input name="language" value="{{ item.language if item else '' }}" required/></label><br/>
+    <label>Publisher: <input name="publisher" value="{{ item.publisher if item else '' }}"/></label><br/>
+    <label>Pages: <input name="length" type="number" value="{{ item.length if item else '' }}"/></label><br/>
+    <label>Size: <input name="size" value="{{ item.size if item else '' }}"/></label><br/>
+  <label>External URL: <input name="external_url" value="{{ item.external_url if item else '' }}"/></label><br/>
+  <label>Image URL: <input name="image_url" value="{{ item.image_url if item else '' }}"/></label><br/>
+    <button type="submit">{{ 'Save' if item else 'Create' }}</button>
+  </form>
+{% endblock %}

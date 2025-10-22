@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>{% block title %}Library Manager{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      <h1>Library Manager</h1>
+      <nav>
+        <a href="{{ url_for('main.index') }}">Home</a> | <a href="{{ url_for('main.new_item_index') }}">Add Item</a> | <a href="{{ url_for('auth.login') }}">Login</a> | <a href="{{ url_for('auth.register') }}">Register</a>
+      </nav>
+    </header>
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </body>
+</html>

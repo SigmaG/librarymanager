@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}{{ type|capitalize }} - Library{% endblock %}
+{% block content %}
+  <h2>{{ type|capitalize }}s</h2>
+  <p><a href="{{ url_for('main.new_item', typ=type) }}">Create new {{ type }}</a></p>
+  <form method="get" id="list-controls">
+    <label>Sort:
+      <select name="sort" onchange="this.form.submit()">
+        <option value="id" {% if sort == 'id' %}selected{% endif %}>ID</option>
+        <option value="title" {% if sort == 'title' %}selected{% endif %}>Title</option>
+      </select>
+    </label>
+    <label>Order:
+      <select name="order" onchange="this.form.submit()">
+        <option value="asc" {% if order == 'asc' %}selected{% endif %}>Ascending</option>
+        <option value="desc" {% if order == 'desc' %}selected{% endif %}>Descending</option>
+      </select>
+    </label>
+  </form>
+
+  {% if items %}
+    <p>
+      Showing: {% if items|length %}
+        {{ items[0].title if sort == 'title' else items[0].id }} — {{ items[-1].title if sort == 'title' else items[-1].id }}
+        of {{ total }} total
+      {% endif %}
+    </p>
+    <ul>
+      {% for it in items %}
+  <li><a href="{{ url_for('main.item_detail', item_id=it.id) }}">{{ it.title }}</a> — {{ it.type }}</li>
+      {% endfor %}
+    </ul>
+    <div class="pagination">
+      {% if has_prev %}
+        <a href="{{ url_for('main.items_by_type', typ=route_param, cursor=prev_cursor, direction='prev', sort=sort, order=order) }}">&laquo; Prev</a>
+      {% endif %}
+      {% if has_next %}
+        <a href="{{ url_for('main.items_by_type', typ=route_param, cursor=next_cursor, direction='next', sort=sort, order=order) }}">Next &raquo;</a>
+      {% endif %}
+      {% if not has_next and not has_prev %}
+        <span>End of list</span>
+      {% endif %}
+    </div>
+  {% else %}
+    <p>No items of this type yet.</p>
+  {% endif %}
+{% endblock %}

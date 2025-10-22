@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Home - Library{% endblock %}
+{% block content %}
+  <h2>Recent items</h2>
+  <p>Browse full libraries: <a href="{{ url_for('main.items_by_type', typ='book') }}">Books</a> | <a href="{{ url_for('main.items_by_type', typ='cd') }}">CDs</a> | <a href="{{ url_for('main.items_by_type', typ='dvd') }}">DVDs</a> | <a href="{{ url_for('main.items_by_type', typ='boardgame') }}">Board games</a></p>
+  <ul>
+    {% for it in items %}
+      <li>
+        <strong><a href="{{ url_for('main.item_detail', item_id=it.id) }}">{{ it.title }}</a></strong>
+        <em>({{ it.type }})</em>
+        {% if it.type == 'book' %}
+          {% if it.author %} — {{ it.author }}{% endif %}
+        {% elif it.type == 'cd' %}
+          {% if it.artist %} — {{ it.artist }}{% endif %}
+        {% elif it.type == 'dvd' %}
+          {% if it.director %} — directed by {{ it.director }}{% endif %}
+        {% elif it.type == 'board_game' %}
+          {% if it.min_players and it.max_players %} — {{ it.min_players }}–{{ it.max_players }} players{% endif %}
+        {% endif %}
+      </li>
+    {% else %}
+      <li>No items yet.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}
